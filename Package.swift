@@ -18,9 +18,9 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(path: "../../swift-primitives/swift-terminal-primitives"),
-        .package(path: "../../swift-standards/swift-ecma-48"),
-        .package(path: "../../swift-primitives/swift-test-primitives"),
+        .package(url: "https://github.com/swift-primitives/swift-terminal-primitives.git", from: "0.0.1"),
+        .package(url: "https://github.com/swift-standards/swift-ecma-48.git", from: "0.0.1"),
+        .package(url: "https://github.com/swift-primitives/swift-test-primitives.git", from: "0.0.1"),
     ],
     targets: [
         .target(
