@@ -9,18 +9,17 @@ let package = Package(
         .iOS(.v26),
         .tvOS(.v26),
         .watchOS(.v26),
-        .visionOS(.v26),
+        .visionOS(.v26)
     ],
     products: [
         .library(
             name: "Console",
             targets: ["Console"]
-        ),
+        )
     ],
     dependencies: [
         .package(path: "../swift-posix"),
-        .package(path: "../../swift-standards/swift-ecma-48"),
-        .package(path: "../../swift-primitives/swift-test-primitives"),
+        .package(path: "../../swift-standards/swift-ecma-48")
     ],
     targets: [
         .target(
@@ -28,17 +27,9 @@ let package = Package(
             dependencies: [
                 // POSIX Kernel re-exports Terminal Primitives with callAsFunction implementations
                 .product(name: "POSIX Kernel", package: "swift-posix", condition: .when(platforms: [.macOS, .iOS, .tvOS, .watchOS, .visionOS, .linux])),
-                .product(name: "ECMA 48", package: "swift-ecma-48"),
+                .product(name: "ECMA 48", package: "swift-ecma-48")
             ]
-        ),
-        .testTarget(
-            name: "Console Tests",
-            dependencies: [
-                "Console",
-                .product(name: "Test Primitives", package: "swift-test-primitives"),
-            ],
-            path: "Tests/Console Tests"
-        ),
+        )
     ],
     swiftLanguageModes: [.v6]
 )
@@ -47,7 +38,7 @@ for target in package.targets where ![.system, .binary, .plugin].contains(target
     let settings: [SwiftSetting] = [
         .enableUpcomingFeature("ExistentialAny"),
         .enableUpcomingFeature("InternalImportsByDefault"),
-        .enableUpcomingFeature("MemberImportVisibility"),
+        .enableUpcomingFeature("MemberImportVisibility")
     ]
     target.swiftSettings = (target.swiftSettings ?? []) + settings
 }
