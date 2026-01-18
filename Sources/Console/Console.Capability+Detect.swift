@@ -9,7 +9,9 @@
 //
 // ===----------------------------------------------------------------------===//
 
-public import Terminal_Primitives
+#if os(macOS) || os(iOS) || os(tvOS) || os(watchOS) || os(visionOS) || os(Linux)
+public import POSIX_Kernel
+#endif
 
 #if canImport(Darwin)
 import Darwin

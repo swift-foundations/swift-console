@@ -18,15 +18,16 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(url: "https://github.com/swift-primitives/swift-terminal-primitives.git", from: "0.0.1"),
-        .package(url: "https://github.com/swift-standards/swift-ecma-48.git", from: "0.0.1"),
-        .package(url: "https://github.com/swift-primitives/swift-test-primitives.git", from: "0.0.1"),
+        .package(path: "../swift-posix"),
+        .package(path: "../../swift-standards/swift-ecma-48"),
+        .package(path: "../../swift-primitives/swift-test-primitives"),
     ],
     targets: [
         .target(
             name: "Console",
             dependencies: [
-                .product(name: "Terminal Primitives", package: "swift-terminal-primitives"),
+                // POSIX Kernel re-exports Terminal Primitives with callAsFunction implementations
+                .product(name: "POSIX Kernel", package: "swift-posix", condition: .when(platforms: [.macOS, .iOS, .tvOS, .watchOS, .visionOS, .linux])),
                 .product(name: "ECMA 48", package: "swift-ecma-48"),
             ]
         ),
