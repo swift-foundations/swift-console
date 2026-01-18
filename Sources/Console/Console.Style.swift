@@ -80,10 +80,10 @@ extension Console.Style {
     ///
     /// - Parameter capability: Console capability to respect
     /// - Returns: ANSI escape sequence, or empty string if no color support
-    public func sequence(for capability: Console.Capability) -> String {
+    public func sequence(for capability: Console.Capability) -> Swift.String {
         guard capability.color.isSupported else { return "" }
 
-        var codes: [String] = []
+        var codes: [Swift.String] = []
 
         // Add attributes
         for attr in attributes.sorted(by: { $0.rawValue < $1.rawValue }) {
@@ -105,7 +105,7 @@ extension Console.Style {
     }
 
     /// Reset sequence.
-    public static func resetSequence(for capability: Console.Capability) -> String {
+    public static func resetSequence(for capability: Console.Capability) -> Swift.String {
         guard capability.color.isSupported else { return "" }
         return ECMA_48.SGR.Attribute.reset.sequence
     }
@@ -120,7 +120,7 @@ extension Console.Style {
     ///   - text: Text to style
     ///   - capability: Console capability to respect
     /// - Returns: Styled text (with reset at end)
-    public func apply(to text: String, capability: Console.Capability) -> String {
+    public func apply(to text: Swift.String, capability: Console.Capability) -> Swift.String {
         let start = sequence(for: capability)
         guard !start.isEmpty else { return text }
         let end = Self.resetSequence(for: capability)
@@ -132,7 +132,7 @@ extension Console.Style {
 
 extension ECMA_48.SGR.Color {
     /// Get foreground color codes for given capability.
-    internal func foregroundCodes(for capability: Console.Capability.Color) -> [String] {
+    internal func foregroundCodes(for capability: Console.Capability.Color) -> [Swift.String] {
         switch self {
         case .palette(let p):
             // 4-bit colors: 30-37 (normal), 90-97 (bright)
@@ -168,7 +168,7 @@ extension ECMA_48.SGR.Color {
     }
 
     /// Get background color codes for given capability.
-    internal func backgroundCodes(for capability: Console.Capability.Color) -> [String] {
+    internal func backgroundCodes(for capability: Console.Capability.Color) -> [Swift.String] {
         switch self {
         case .palette(let p):
             if p.rawValue < 8 {
