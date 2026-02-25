@@ -29,7 +29,13 @@ let package = Package(
                 .product(name: "POSIX Kernel", package: "swift-posix", condition: .when(platforms: [.macOS, .iOS, .tvOS, .watchOS, .visionOS, .linux])),
                 .product(name: "ECMA 48", package: "swift-ecma-48")
             ]
-        )
+        ),
+        .testTarget(
+            name: "Console Tests",
+            dependencies: [
+                "Console",
+            ]
+        ),
     ],
     swiftLanguageModes: [.v6]
 )
@@ -40,6 +46,7 @@ for target in package.targets where ![.system, .binary, .plugin, .macro].contain
         .enableUpcomingFeature("ExistentialAny"),
         .enableUpcomingFeature("InternalImportsByDefault"),
         .enableUpcomingFeature("MemberImportVisibility"),
+        .enableUpcomingFeature("NonisolatedNonsendingByDefault"),
         .enableExperimentalFeature("Lifetimes"),
         .enableExperimentalFeature("SuppressedAssociatedTypes"),
         .enableExperimentalFeature("SuppressedAssociatedTypesWithDefaults"),
