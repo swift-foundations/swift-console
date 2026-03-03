@@ -19,7 +19,10 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../swift-posix"),
-        .package(path: "../../swift-standards/swift-ecma-48")
+        .package(path: "../../swift-standards/swift-ecma-48"),
+        .package(path: "../../swift-primitives/swift-terminal-primitives"),
+        .package(path: "../../swift-primitives/swift-buffer-primitives"),
+        .package(path: "../../swift-primitives/swift-standard-library-extensions"),
     ],
     targets: [
         .target(
@@ -27,7 +30,10 @@ let package = Package(
             dependencies: [
                 // POSIX Kernel re-exports Terminal Primitives with callAsFunction implementations
                 .product(name: "POSIX Kernel", package: "swift-posix", condition: .when(platforms: [.macOS, .iOS, .tvOS, .watchOS, .visionOS, .linux])),
-                .product(name: "ECMA 48", package: "swift-ecma-48")
+                .product(name: "ECMA 48", package: "swift-ecma-48"),
+                .product(name: "Terminal Input Primitives", package: "swift-terminal-primitives"),
+                .product(name: "Buffer Linear Inline Primitives", package: "swift-buffer-primitives"),
+                .product(name: "Standard Library Extensions", package: "swift-standard-library-extensions"),
             ]
         ),
         .testTarget(

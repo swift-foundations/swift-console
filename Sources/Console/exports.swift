@@ -10,6 +10,7 @@
 // ===----------------------------------------------------------------------===//
 
 @_exported public import ECMA_48
+@_exported public import Terminal_Input_Primitives
 
 #if os(macOS) || os(iOS) || os(tvOS) || os(watchOS) || os(visionOS) || os(Linux)
 // POSIX_Kernel re-exports Terminal_Primitives with callAsFunction implementations
