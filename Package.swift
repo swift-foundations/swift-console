@@ -19,7 +19,7 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../swift-posix"),
-        .package(path: "../../swift-standards/swift-ecma-48"),
+        .package(path: "../../swift-ecma/swift-ecma-48"),
         .package(path: "../../swift-primitives/swift-terminal-primitives"),
         .package(path: "../../swift-primitives/swift-buffer-primitives"),
         .package(path: "../../swift-primitives/swift-standard-library-extensions"),
