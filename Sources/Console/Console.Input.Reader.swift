@@ -108,13 +108,13 @@ extension Console.Input.Reader {
     private mutating func readBytes() throws(Console.Input.Error) -> Int {
         let bytesRead: Int
         do {
-            bytesRead = try withUnsafeTemporaryAllocation(
+            bytesRead = try unsafe withUnsafeTemporaryAllocation(
                 byteCount: 4096,
                 alignment: 1
             ) { (rawBuffer: UnsafeMutableRawBufferPointer) throws(Kernel.IO.Read.Error) -> Int in
-                let n = try stream.read(into: rawBuffer)
+                let n = try unsafe stream.read(into: rawBuffer)
                 if n > 0 {
-                    let typed = UnsafeBufferPointer(
+                    let typed = unsafe UnsafeBufferPointer(
                         start: rawBuffer.baseAddress!.assumingMemoryBound(to: UInt8.self),
                         count: n
                     )
@@ -162,9 +162,9 @@ extension Console.Input.Reader {
 
     /// Write a string to stdout using the POSIX write syscall.
     private func writeToStdout(_ string: Swift.String) {
-        string.withCString { pointer in
-            var remaining = strlen(pointer)
-            var current = pointer
+        unsafe string.withCString { pointer in
+            var remaining = unsafe strlen(pointer)
+            var current = unsafe pointer
             while remaining > 0 {
                 let written = unsafe write(
                     Terminal.Stream.stdout.rawValue,
@@ -173,7 +173,7 @@ extension Console.Input.Reader {
                 )
                 guard written > 0 else { return }
                 remaining -= written
-                current = unsafe current.advanced(by: written)
+                unsafe (current = current.advanced(by: written))
             }
         }
     }
