@@ -105,7 +105,7 @@ extension Console.Capability {
 extension Console.Capability {
     /// Get environment variable value.
     private static func getEnvironment(_ name: Swift.String) -> Swift.String? {
-        guard let ptr = getenv(name) else { return nil }
-        return Swift.String(cString: ptr)
+        guard let ptr = unsafe getenv(name) else { return nil }
+        return unsafe Swift.String(cString: ptr)
     }
 }

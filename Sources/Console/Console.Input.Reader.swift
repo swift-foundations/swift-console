@@ -20,8 +20,8 @@ import Musl
 #endif
 
 import Standard_Library_Extensions
-public import Terminal_Primitives
-public import Terminal_Input_Primitives
+import Terminal_Primitives
+import Terminal_Input_Primitives
 
 /// Internal reader that manages raw mode lifecycle, stdin reads, and parser loop.
 extension Console.Input {
@@ -43,7 +43,7 @@ extension Console.Input {
                 throw .terminal(error)
             }
 
-            var reader = Reader(
+            let reader = Reader(
                 stream: stream,
                 configuration: configuration,
                 token: token,
