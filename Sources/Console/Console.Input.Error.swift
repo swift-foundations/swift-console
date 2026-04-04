@@ -9,6 +9,9 @@
 //
 // ===----------------------------------------------------------------------===//
 
+public import Kernel_IO_Primitives
+public import Kernel_File_Primitives
+
 extension Console.Input {
     /// Errors that can occur during console input reading.
     public enum Error: Swift.Error, Sendable {
