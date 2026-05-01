@@ -10,7 +10,7 @@
 // ===----------------------------------------------------------------------===//
 
 #if os(macOS) || os(iOS) || os(tvOS) || os(watchOS) || os(visionOS) || os(Linux)
-public import POSIX_Kernel
+public import Kernel
 #endif
 
 #if canImport(Darwin)

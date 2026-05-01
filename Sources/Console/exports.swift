@@ -13,6 +13,8 @@
 @_exported public import Terminal_Input_Primitives
 
 #if os(macOS) || os(iOS) || os(tvOS) || os(watchOS) || os(visionOS) || os(Linux)
-// POSIX_Kernel re-exports Terminal_Primitives with callAsFunction implementations
-@_exported public import POSIX_Kernel
+// Kernel (L3-unifier) composes POSIX Kernel which re-exports Terminal_Primitives
+// with callAsFunction implementations. Per [PLAT-ARCH-008e], compose the
+// L3-unifier rather than reaching directly into the L3-policy tier.
+@_exported public import Kernel
 #endif

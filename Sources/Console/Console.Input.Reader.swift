@@ -22,8 +22,8 @@ import Musl
 import Standard_Library_Extensions
 import Terminal_Primitives
 import Terminal_Input_Primitives
-import Kernel_IO_Primitives
-import Kernel_File_Primitives
+import Kernel
+import Kernel_Terminal
 
 /// Internal reader that manages raw mode lifecycle, stdin reads, and parser loop.
 extension Console.Input {
