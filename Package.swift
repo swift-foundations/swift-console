@@ -21,6 +21,7 @@ let package = Package(
         .package(path: "../swift-kernel"),
         .package(path: "../../swift-ecma/swift-ecma-48"),
         .package(path: "../../swift-primitives/swift-terminal-primitives"),
+        .package(path: "../../swift-primitives/swift-terminal-input-primitives"),
         .package(path: "../../swift-primitives/swift-standard-library-extensions"),
     ],
     targets: [
@@ -33,7 +34,7 @@ let package = Package(
                 .product(name: "Kernel", package: "swift-kernel", condition: .when(platforms: [.macOS, .iOS, .tvOS, .watchOS, .visionOS, .linux])),
                 .product(name: "Kernel Terminal", package: "swift-kernel", condition: .when(platforms: [.macOS, .iOS, .tvOS, .watchOS, .visionOS, .linux])),
                 .product(name: "ECMA 48", package: "swift-ecma-48"),
-                .product(name: "Terminal Input Primitives", package: "swift-terminal-primitives"),
+                .product(name: "Terminal Input Primitives", package: "swift-terminal-input-primitives"),
                 .product(name: "Standard Library Extensions", package: "swift-standard-library-extensions"),
             ]
         ),
