@@ -71,17 +71,6 @@
       "statusRaw": "DECISION",
       "tier": null,
       "scope": null
-    },
-    {
-      "file": "audit.md",
-      "displayName": "audit.md",
-      "topic": "Modularization audit: MOD-006 unused dep, MOD-011 test support",
-      "date": "2026-03-20",
-      "status": "OPEN",
-      "statusDetail": null,
-      "statusRaw": "OPEN",
-      "tier": null,
-      "scope": null
     }
   ]
 }
