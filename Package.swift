@@ -18,11 +18,11 @@ let package = Package(
         )
     ],
     dependencies: [
-        .package(path: "../swift-kernel"),
-        .package(path: "../../swift-ecma/swift-ecma-48"),
-        .package(path: "../../swift-primitives/swift-terminal-primitives"),
-        .package(path: "../../swift-primitives/swift-terminal-input-primitives"),
-        .package(path: "../../swift-primitives/swift-standard-library-extensions"),
+        .package(url: "https://github.com/swift-foundations/swift-kernel.git", branch: "main"),
+        .package(url: "https://github.com/swift-ecma/swift-ecma-48.git", branch: "main"),
+        .package(url: "https://github.com/swift-primitives/swift-terminal-primitives.git", branch: "main"),
+        .package(url: "https://github.com/swift-primitives/swift-terminal-input-primitives.git", branch: "main"),
+        .package(url: "https://github.com/swift-primitives/swift-standard-library-extensions.git", branch: "main"),
     ],
     targets: [
         .target(
