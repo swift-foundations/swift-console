@@ -19,6 +19,7 @@ import Glibc
 import Musl
 #endif
 
+import Byte_Primitive
 import Standard_Library_Extensions
 import Terminal_Primitives
 import Terminal_Input_Primitives
@@ -31,7 +32,7 @@ extension Console.Input {
         let stream: Terminal.Stream
         let configuration: Configuration
         var token: Terminal.Mode.Raw.Token
-        var parseBuffer: ContiguousArray<UInt8>
+        var parseBuffer: ContiguousArray<Byte>
 
         /// Enter raw mode and enable configured terminal modes.
         static func start(
@@ -79,7 +80,7 @@ extension Console.Input {
                     do {
                         let event = try Terminal.Input.Parser.parse(&input)
                         // Remove consumed bytes from the front.
-                        let consumed = Int(bitPattern: input.consumedCount)
+                        let consumed = Int(bitPattern: input.consumed)
                         parseBuffer.removeFirst(consumed)
                         return event
                     } catch Terminal.Input.Parser.Error.incompleteSequence {
@@ -117,7 +118,7 @@ extension Console.Input.Reader {
                 let n = try unsafe stream.read(into: rawBuffer)
                 if n > 0 {
                     let typed = unsafe UnsafeBufferPointer(
-                        start: rawBuffer.baseAddress!.assumingMemoryBound(to: UInt8.self),
+                        start: rawBuffer.baseAddress!.assumingMemoryBound(to: Byte.self),
                         count: n
                     )
                     unsafe self.parseBuffer.append(contentsOf: typed)
