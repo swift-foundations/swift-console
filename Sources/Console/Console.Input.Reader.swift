@@ -21,9 +21,10 @@ import Musl
 
 import Byte_Primitive
 import Standard_Library_Extensions
-import Terminal_Primitives
 import Terminal_Input_Primitives
 import Kernel
+// Terminal Primitives symbols (Terminal.Mode/Stream/Input) reach here via Kernel Terminal's
+// @_exported re-export — compose the L3-unifier, not the L3-policy tier [PLAT-ARCH-008e].
 import Kernel_Terminal
 
 /// Internal reader that manages raw mode lifecycle, stdin reads, and parser loop.
