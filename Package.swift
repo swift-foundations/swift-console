@@ -22,6 +22,7 @@ let package = Package(
         .package(url: "https://github.com/swift-ecma/swift-ecma-48.git", branch: "main"),
         .package(url: "https://github.com/swift-primitives/swift-terminal-input-primitives.git", branch: "main"),
         .package(url: "https://github.com/swift-primitives/swift-standard-library-extensions.git", branch: "main"),
+        .package(url: "https://github.com/swift-primitives/swift-byte-primitives.git", branch: "main"),
     ],
     targets: [
         .target(
@@ -41,6 +42,7 @@ let package = Package(
             name: "Console Tests",
             dependencies: [
                 "Console",
+                .product(name: "Byte Primitive", package: "swift-byte-primitives"),
             ]
         ),
     ],
