@@ -9,8 +9,9 @@
 //
 // ===----------------------------------------------------------------------===//
 
-import Testing
 internal import Byte_Primitive
+import Testing
+
 @testable import Console
 
 extension Console.Input {
@@ -29,7 +30,7 @@ extension Console.Input {
 extension Console.Input.Test.Integration {
     @Test
     func `Single ASCII character produces key event`() throws {
-        let bytes: [Byte] = [0x61] // 'a'
+        let bytes: [Byte] = [0x61]  // 'a'
         var input = Input.Buffer(bytes)
         let event = try Terminal.Input.Parser.parse(&input)
         #expect(event == .key(Terminal.Input.Key(code: .character("a"))))
@@ -37,7 +38,7 @@ extension Console.Input.Test.Integration {
 
     @Test
     func `Up arrow escape sequence produces key event`() throws {
-        let bytes: [Byte] = [0x1B, 0x5B, 0x41] // ESC[A
+        let bytes: [Byte] = [0x1B, 0x5B, 0x41]  // ESC[A
         var input = Input.Buffer(bytes)
         let event = try Terminal.Input.Parser.parse(&input)
         #expect(event == .key(Terminal.Input.Key(code: .up)))
@@ -45,7 +46,7 @@ extension Console.Input.Test.Integration {
 
     @Test
     func `Down arrow escape sequence produces key event`() throws {
-        let bytes: [Byte] = [0x1B, 0x5B, 0x42] // ESC[B
+        let bytes: [Byte] = [0x1B, 0x5B, 0x42]  // ESC[B
         var input = Input.Buffer(bytes)
         let event = try Terminal.Input.Parser.parse(&input)
         #expect(event == .key(Terminal.Input.Key(code: .down)))
@@ -53,7 +54,7 @@ extension Console.Input.Test.Integration {
 
     @Test
     func `Right arrow escape sequence produces key event`() throws {
-        let bytes: [Byte] = [0x1B, 0x5B, 0x43] // ESC[C
+        let bytes: [Byte] = [0x1B, 0x5B, 0x43]  // ESC[C
         var input = Input.Buffer(bytes)
         let event = try Terminal.Input.Parser.parse(&input)
         #expect(event == .key(Terminal.Input.Key(code: .right)))
@@ -61,7 +62,7 @@ extension Console.Input.Test.Integration {
 
     @Test
     func `Left arrow escape sequence produces key event`() throws {
-        let bytes: [Byte] = [0x1B, 0x5B, 0x44] // ESC[D
+        let bytes: [Byte] = [0x1B, 0x5B, 0x44]  // ESC[D
         var input = Input.Buffer(bytes)
         let event = try Terminal.Input.Parser.parse(&input)
         #expect(event == .key(Terminal.Input.Key(code: .left)))
@@ -69,7 +70,7 @@ extension Console.Input.Test.Integration {
 
     @Test
     func `Carriage return produces enter key event`() throws {
-        let bytes: [Byte] = [0x0D] // CR
+        let bytes: [Byte] = [0x0D]  // CR
         var input = Input.Buffer(bytes)
         let event = try Terminal.Input.Parser.parse(&input)
         #expect(event == .key(Terminal.Input.Key(code: .enter)))
@@ -77,7 +78,7 @@ extension Console.Input.Test.Integration {
 
     @Test
     func `Tab byte produces tab key event`() throws {
-        let bytes: [Byte] = [0x09] // HT
+        let bytes: [Byte] = [0x09]  // HT
         var input = Input.Buffer(bytes)
         let event = try Terminal.Input.Parser.parse(&input)
         #expect(event == .key(Terminal.Input.Key(code: .tab)))
@@ -98,7 +99,7 @@ extension Console.Input.Test.Integration {
 
     @Test
     func `Incomplete escape sequence throws incompleteSequence`() {
-        let bytes: [Byte] = [0x1B] // ESC alone
+        let bytes: [Byte] = [0x1B]  // ESC alone
         var input = Input.Buffer(bytes)
 
         do throws(Terminal.Input.Parser.Error) {
@@ -111,7 +112,7 @@ extension Console.Input.Test.Integration {
 
     @Test
     func `Partial CSI sequence throws incompleteSequence`() {
-        let bytes: [Byte] = [0x1B, 0x5B] // ESC[ without final byte
+        let bytes: [Byte] = [0x1B, 0x5B]  // ESC[ without final byte
         var input = Input.Buffer(bytes)
 
         do throws(Terminal.Input.Parser.Error) {
@@ -146,7 +147,7 @@ extension Console.Input.Test.Integration {
     @Test
     func `Sequential parsing from shared buffer`() throws {
         // Two characters in one buffer, parsed sequentially
-        let bytes: [Byte] = [0x61, 0x62] // 'a', 'b'
+        let bytes: [Byte] = [0x61, 0x62]  // 'a', 'b'
         var input = Input.Buffer(bytes)
 
         let event1 = try Terminal.Input.Parser.parse(&input)
@@ -158,7 +159,7 @@ extension Console.Input.Test.Integration {
 
     @Test
     func `Home key escape sequence`() throws {
-        let bytes: [Byte] = [0x1B, 0x5B, 0x48] // ESC[H
+        let bytes: [Byte] = [0x1B, 0x5B, 0x48]  // ESC[H
         var input = Input.Buffer(bytes)
         let event = try Terminal.Input.Parser.parse(&input)
         #expect(event == .key(Terminal.Input.Key(code: .home)))
@@ -166,7 +167,7 @@ extension Console.Input.Test.Integration {
 
     @Test
     func `End key escape sequence`() throws {
-        let bytes: [Byte] = [0x1B, 0x5B, 0x46] // ESC[F
+        let bytes: [Byte] = [0x1B, 0x5B, 0x46]  // ESC[F
         var input = Input.Buffer(bytes)
         let event = try Terminal.Input.Parser.parse(&input)
         #expect(event == .key(Terminal.Input.Key(code: .end)))
@@ -175,7 +176,7 @@ extension Console.Input.Test.Integration {
     @Test
     func `Delete key escape sequence`() throws {
         // Delete: ESC[3~
-        let bytes: [Byte] = [0x1B, 0x5B, 0x33, 0x7E] // ESC[3~
+        let bytes: [Byte] = [0x1B, 0x5B, 0x33, 0x7E]  // ESC[3~
         var input = Input.Buffer(bytes)
         let event = try Terminal.Input.Parser.parse(&input)
         #expect(event == .key(Terminal.Input.Key(code: .delete)))

@@ -29,9 +29,9 @@ extension Console.Input {
         }
 
         /// Default configuration: bracketed paste only.
-        public static let `default` = Configuration(mouse: false, paste: true, kitty: false)
+        public static let `default` = Self(mouse: false, paste: true, kitty: false)
 
         /// Full configuration: all modes enabled.
-        public static let full = Configuration(mouse: true, paste: true, kitty: true)
+        public static let full = Self(mouse: true, paste: true, kitty: true)
     }
 }

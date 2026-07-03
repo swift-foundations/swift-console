@@ -10,15 +10,15 @@
 // ===----------------------------------------------------------------------===//
 
 #if os(macOS) || os(iOS) || os(tvOS) || os(watchOS) || os(visionOS) || os(Linux)
-public import Kernel
+    public import Kernel
 #endif
 
 #if canImport(Darwin)
-import Darwin
+    import Darwin
 #elseif canImport(Glibc)
-import Glibc
+    import Glibc
 #elseif os(Windows)
-import CRT
+    import CRT
 #endif
 
 extension Console.Capability {
@@ -47,7 +47,8 @@ extension Console.Capability {
         }
 
         // CI environments often support color but aren't TTYs
-        let isCI = getEnvironment("CI") != nil
+        let isCI =
+            getEnvironment("CI") != nil
             || getEnvironment("GITHUB_ACTIONS") != nil
             || getEnvironment("GITLAB_CI") != nil
 

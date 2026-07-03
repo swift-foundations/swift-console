@@ -10,11 +10,11 @@
 // ===----------------------------------------------------------------------===//
 
 #if canImport(Darwin)
-import Darwin
+    import Darwin
 #elseif canImport(Glibc)
-import Glibc
+    import Glibc
 #elseif os(Windows)
-import CRT
+    import CRT
 #endif
 
 extension Console {
