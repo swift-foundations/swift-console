@@ -17,6 +17,16 @@
     import CRT
 #endif
 
+#if canImport(Glibc)
+    // Glibc imports `stdout` as a mutable global `var`, which is not
+    // concurrency-safe under Swift 6 strict concurrency ("reference to var
+    // 'stdout' is not concurrency-safe because it involves shared mutable
+    // state"). The underlying `FILE *` handle is process-global and stable
+    // for the process lifetime, so bind it once at file scope. Darwin and
+    // CRT expose `stdout` in a concurrency-safe form and use it directly.
+    nonisolated(unsafe) private let systemStdout = unsafe stdout
+#endif
+
 extension Console {
     /// Output stream operations.
     public enum Output {
@@ -27,7 +37,11 @@ extension Console {
         /// buffered instead of line-buffered — without an explicit flush,
         /// progress output sits invisibly in the buffer.
         public static func flush() {
-            unsafe fflush(stdout)
+            #if canImport(Glibc)
+                unsafe fflush(systemStdout)
+            #else
+                unsafe fflush(stdout)
+            #endif
         }
     }
 }
