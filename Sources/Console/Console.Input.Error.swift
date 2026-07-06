@@ -9,7 +9,9 @@
 //
 // ===----------------------------------------------------------------------===//
 
-public import Kernel
+#if os(macOS) || os(iOS) || os(tvOS) || os(watchOS) || os(visionOS) || os(Linux)
+    public import Kernel
+#endif
 
 extension Console.Input {
     /// Errors that can occur during console input reading.
@@ -20,7 +22,9 @@ extension Console.Input {
         /// Input parser encountered invalid data.
         case parser(Terminal.Input.Parser.Error)
 
-        /// Reading from the terminal stream failed.
-        case read(Kernel.IO.Read.Error)
+        #if os(macOS) || os(iOS) || os(tvOS) || os(watchOS) || os(visionOS) || os(Linux)
+            /// Reading from the terminal stream failed.
+            case read(Kernel.IO.Read.Error)
+        #endif
     }
 }
