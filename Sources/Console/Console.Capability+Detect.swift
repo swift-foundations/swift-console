@@ -42,7 +42,16 @@ extension Console.Capability {
         let forceColor = getEnvironment("FORCE_COLOR") != nil
 
         // Check if stream is interactive (TTY)
-        guard forceColor || stream.interactive() else {
+        #if os(macOS) || os(iOS) || os(tvOS) || os(watchOS) || os(visionOS) || os(Linux)
+            let interactive = stream.interactive()
+        #else
+            // Windows: Kernel Terminal witnesses (callAsFunction TTY detection) are not
+            // composed on this platform (Package.swift conditions Kernel to POSIX), so
+            // conservatively treat the stream as non-interactive; color requires
+            // FORCE_COLOR. Real Windows detection lands with a Windows Kernel composition.
+            let interactive = false
+        #endif
+        guard forceColor || interactive else {
             return .none
         }
 
