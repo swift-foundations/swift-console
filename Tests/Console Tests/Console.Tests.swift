@@ -55,7 +55,7 @@ struct StyleTests {
     }
 
     @Test
-    func `Error style produces correct sequence`() {
+    func `Console.Style.error produces correct sequence`() {
         let style = Console.Style.error
         let seq = style.sequence(for: .full)
         // Bold (1) + red foreground (31)

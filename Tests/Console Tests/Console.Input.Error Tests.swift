@@ -25,7 +25,7 @@ extension Console.Input.Error {
 
 extension Console.Input.Error.Test.Unit {
     @Test
-    func `Terminal case wraps Terminal Error`() {
+    func `Terminal case wraps Terminal.Error`() {
         let underlying = Terminal.Error(
             operation: .enterRaw,
             underlying: .unsupported
@@ -39,7 +39,7 @@ extension Console.Input.Error.Test.Unit {
     }
 
     @Test
-    func `Parser case wraps Parser Error`() {
+    func `Parser case wraps Parser.Error`() {
         let error = Console.Input.Error.parser(.invalidUTF8)
         if case .parser(let e) = error {
             #expect(e == .invalidUTF8)
@@ -78,15 +78,17 @@ extension Console.Input.Error.Test.Unit {
         }
     }
 
-    @Test
-    func `Read case wraps Kernel IO Read Error`() {
-        let error = Console.Input.Error.read(.handle(.invalid))
-        if case .read(let e) = error {
-            #expect(e == .handle(.invalid))
-        } else {
-            Issue.record("Expected .read case")
+    #if os(macOS) || os(iOS) || os(tvOS) || os(watchOS) || os(visionOS) || os(Linux)
+        @Test
+        func `Read case wraps Kernel.IO.Read.Error`() {
+            let error = Console.Input.Error.read(.handle(.invalid))
+            if case .read(let e) = error {
+                #expect(e == .handle(.invalid))
+            } else {
+                Issue.record("Expected .read case")
+            }
         }
-    }
+    #endif
 }
 
 // MARK: - EdgeCase
@@ -98,16 +100,20 @@ extension Console.Input.Error.Test.EdgeCase {
             Terminal.Error(operation: .enterRaw, underlying: .unsupported)
         )
         let parser = Console.Input.Error.parser(.invalidUTF8)
-        let read = Console.Input.Error.read(.handle(.invalid))
+        #if os(macOS) || os(iOS) || os(tvOS) || os(watchOS) || os(visionOS) || os(Linux)
+            let read = Console.Input.Error.read(.handle(.invalid))
+        #endif
 
         // Verify each matches only its own case
         if case .terminal = terminal {} else { Issue.record("terminal mismatch") }
         if case .parser = parser {} else { Issue.record("parser mismatch") }
-        if case .read = read {} else { Issue.record("read mismatch") }
+        #if os(macOS) || os(iOS) || os(tvOS) || os(watchOS) || os(visionOS) || os(Linux)
+            if case .read = read {} else { Issue.record("read mismatch") }
+        #endif
     }
 
     @Test
-    func `Error conforms to Swift Error protocol`() {
+    func `Console.Input.Error conforms to Swift.Error`() {
         let error: any Swift.Error = Console.Input.Error.parser(.invalidUTF8)
         #expect(error is Console.Input.Error)
     }
