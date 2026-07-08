@@ -19,15 +19,17 @@
 
 extension Console {
     /// Output stream operations.
-    public enum Output {
-        /// Flushes buffered standard output.
-        ///
-        /// Ensures `print()` output is visible immediately when stdout
-        /// is piped. SwiftPM's test harness pipes stdout, making it fully
-        /// buffered instead of line-buffered — without an explicit flush,
-        /// progress output sits invisibly in the buffer.
-        public static func flush() {
-            unsafe fflush(stdout)
-        }
+    public enum Output {}
+}
+
+extension Console.Output {
+    /// Flushes buffered standard output.
+    ///
+    /// Ensures `print()` output is visible immediately when stdout
+    /// is piped. SwiftPM's test harness pipes stdout, making it fully
+    /// buffered instead of line-buffered — without an explicit flush,
+    /// progress output sits invisibly in the buffer.
+    public static func flush() {
+        unsafe fflush(stdout)
     }
 }
