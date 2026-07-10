@@ -49,7 +49,7 @@ extension Console {
             var reader = try Reader.start(stream: stream, configuration: configuration)
 
             defer {
-                do throws(Console.Input.Error) {
+                do throws(Self.Error) {
                     try reader.stop()
                 } catch {
                     // Best-effort terminal restoration. If this fails, the terminal

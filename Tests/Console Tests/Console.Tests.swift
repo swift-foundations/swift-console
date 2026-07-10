@@ -16,6 +16,7 @@ import Testing
 extension Console.Capability {
     @Suite
     struct Test {
+        // swiftlint:disable:next prefer_self_in_static_references - reason: `@Test` is the swift-testing attribute macro, not a reference to the enclosing `struct Test`; the rule's token-matching false-positives on the name collision (verified via swiftlint --fix, which incorrectly rewrites `@Test` to `@Self`).
         @Test
         func `Color levels are comparable`() {
             #expect(Console.Capability.Color.none < .palette4)
@@ -23,6 +24,7 @@ extension Console.Capability {
             #expect(Console.Capability.Color.palette8 < .trueColor)
         }
 
+        // swiftlint:disable:next prefer_self_in_static_references - reason: `@Test` is the swift-testing attribute macro, not a reference to the enclosing `struct Test`; the rule's token-matching false-positives on the name collision (verified via swiftlint --fix, which incorrectly rewrites `@Test` to `@Self`).
         @Test
         func `Color count is correct`() {
             #expect(Console.Capability.Color.none.colorCount == 0)
@@ -31,6 +33,7 @@ extension Console.Capability {
             #expect(Console.Capability.Color.trueColor.colorCount == 16_777_216)
         }
 
+        // swiftlint:disable:next prefer_self_in_static_references - reason: `@Test` is the swift-testing attribute macro, not a reference to the enclosing `struct Test`; the rule's token-matching false-positives on the name collision (verified via swiftlint --fix, which incorrectly rewrites `@Test` to `@Self`).
         @Test
         func `Static capabilities are correct`() {
             #expect(Console.Capability.none.color == .none)
@@ -43,6 +46,7 @@ extension Console.Capability {
 extension Console.Style {
     @Suite
     struct Test {
+        // swiftlint:disable:next prefer_self_in_static_references - reason: `@Test` is the swift-testing attribute macro, not a reference to the enclosing `struct Test`; the rule's token-matching false-positives on the name collision (verified via swiftlint --fix, which incorrectly rewrites `@Test` to `@Self`).
         @Test
         func `Plain style produces no sequence`() {
             let style = Console.Style.plain
@@ -50,6 +54,7 @@ extension Console.Style {
             #expect(seq.isEmpty)
         }
 
+        // swiftlint:disable:next prefer_self_in_static_references - reason: `@Test` is the swift-testing attribute macro, not a reference to the enclosing `struct Test`; the rule's token-matching false-positives on the name collision (verified via swiftlint --fix, which incorrectly rewrites `@Test` to `@Self`).
         @Test
         func `Bold style produces correct sequence`() {
             let style = Console.Style.bold
@@ -57,6 +62,7 @@ extension Console.Style {
             #expect(seq == "\u{001B}[1m")
         }
 
+        // swiftlint:disable:next prefer_self_in_static_references - reason: `@Test` is the swift-testing attribute macro, not a reference to the enclosing `struct Test`; the rule's token-matching false-positives on the name collision (verified via swiftlint --fix, which incorrectly rewrites `@Test` to `@Self`).
         @Test
         func `Console.Style.error produces correct sequence`() {
             let style = Console.Style.error
@@ -66,6 +72,7 @@ extension Console.Style {
             #expect(seq.contains("31"))
         }
 
+        // swiftlint:disable:next prefer_self_in_static_references - reason: `@Test` is the swift-testing attribute macro, not a reference to the enclosing `struct Test`; the rule's token-matching false-positives on the name collision (verified via swiftlint --fix, which incorrectly rewrites `@Test` to `@Self`).
         @Test
         func `Style respects capability level`() {
             let style = Console.Style.error
@@ -73,6 +80,7 @@ extension Console.Style {
             #expect(noColorSeq.isEmpty)
         }
 
+        // swiftlint:disable:next prefer_self_in_static_references - reason: `@Test` is the swift-testing attribute macro, not a reference to the enclosing `struct Test`; the rule's token-matching false-positives on the name collision (verified via swiftlint --fix, which incorrectly rewrites `@Test` to `@Self`).
         @Test
         func `Apply adds reset at end`() {
             let style = Console.Style.bold
@@ -85,6 +93,7 @@ extension Console.Style {
 extension ECMA_48.SGR.Color {
     @Suite
     struct Test {
+        // swiftlint:disable:next prefer_self_in_static_references - reason: `@Test` is the swift-testing attribute macro, not a reference to the enclosing `struct Test`; the rule's token-matching false-positives on the name collision (verified via swiftlint --fix, which incorrectly rewrites `@Test` to `@Self`).
         @Test
         func `Palette color foreground sequence`() {
             let color = ECMA_48.SGR.Color.palette(.red)
@@ -92,6 +101,7 @@ extension ECMA_48.SGR.Color {
             #expect(codes == ["31"])
         }
 
+        // swiftlint:disable:next prefer_self_in_static_references - reason: `@Test` is the swift-testing attribute macro, not a reference to the enclosing `struct Test`; the rule's token-matching false-positives on the name collision (verified via swiftlint --fix, which incorrectly rewrites `@Test` to `@Self`).
         @Test
         func `Bright palette color foreground sequence`() {
             let color = ECMA_48.SGR.Color.palette(.brightRed)
@@ -99,6 +109,7 @@ extension ECMA_48.SGR.Color {
             #expect(codes == ["91"])
         }
 
+        // swiftlint:disable:next prefer_self_in_static_references - reason: `@Test` is the swift-testing attribute macro, not a reference to the enclosing `struct Test`; the rule's token-matching false-positives on the name collision (verified via swiftlint --fix, which incorrectly rewrites `@Test` to `@Self`).
         @Test
         func `Extended color sequence`() {
             let color = ECMA_48.SGR.Color.extended(196)
@@ -106,6 +117,7 @@ extension ECMA_48.SGR.Color {
             #expect(codes == ["38", "5", "196"])
         }
 
+        // swiftlint:disable:next prefer_self_in_static_references - reason: `@Test` is the swift-testing attribute macro, not a reference to the enclosing `struct Test`; the rule's token-matching false-positives on the name collision (verified via swiftlint --fix, which incorrectly rewrites `@Test` to `@Self`).
         @Test
         func `RGB color sequence`() {
             let color = ECMA_48.SGR.Color.rgb(r: 255, g: 128, b: 64)
@@ -113,6 +125,7 @@ extension ECMA_48.SGR.Color {
             #expect(codes == ["38", "2", "255", "128", "64"])
         }
 
+        // swiftlint:disable:next prefer_self_in_static_references - reason: `@Test` is the swift-testing attribute macro, not a reference to the enclosing `struct Test`; the rule's token-matching false-positives on the name collision (verified via swiftlint --fix, which incorrectly rewrites `@Test` to `@Self`).
         @Test
         func `RGB downgrades to 256-color`() {
             let color = ECMA_48.SGR.Color.rgb(r: 255, g: 0, b: 0)
