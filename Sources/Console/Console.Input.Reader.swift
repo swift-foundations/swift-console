@@ -11,14 +11,6 @@
 
 #if os(macOS) || os(iOS) || os(tvOS) || os(watchOS) || os(visionOS) || os(Linux)
 
-    #if canImport(Darwin)
-        import Darwin
-    #elseif canImport(Glibc)
-        import Glibc
-    #elseif canImport(Musl)
-        import Musl
-    #endif
-
     import Byte_Primitive
     import Standard_Library_Extensions
     import Terminal_Input_Primitives
@@ -50,25 +42,45 @@
                 throw .terminal(error)
             }
 
-            let reader = Self(
+            var reader = Self(
                 stream: stream,
                 configuration: configuration,
                 token: token,
                 parseBuffer: ContiguousArray()
             )
 
-            reader.writeEnableSequences()
+            do throws(Console.Input.Error) {
+                try reader.writeEnableSequences()
+            } catch {
+                // Best-effort: don't leave the terminal stuck in raw mode just
+                // because an enable sequence failed to write.
+                try? reader.token.restore()
+                throw error
+            }
 
             return reader
         }
 
         /// Disable terminal modes and restore the previous mode.
         mutating func stop() throws(Console.Input.Error) {
-            writeDisableSequences()
+            var writeError: Console.Input.Error?
+            do throws(Console.Input.Error) {
+                try writeDisableSequences()
+            } catch {
+                writeError = error
+            }
+
             do throws(Terminal.Error) {
                 try token.restore()
             } catch {
+                // Mode restoration failure is the more serious of the two —
+                // a terminal stuck in raw mode outranks an unset feature
+                // mode — so it takes priority if both failed.
                 throw .terminal(error)
+            }
+
+            if let writeError {
+                throw writeError
             }
         }
 
@@ -138,49 +150,48 @@
     // MARK: - Mode Sequences
 
     extension Console.Input.Reader {
-        /// Write enable sequences to stdout based on configuration.
-        private func writeEnableSequences() {
+        /// Write enable sequences to the raw-mode stream based on configuration.
+        private func writeEnableSequences() throws(Console.Input.Error) {
             if configuration.mouse {
-                writeToStdout(Terminal.Mode.Mouse.Any.enable)
-                writeToStdout(Terminal.Mode.Mouse.SGR.enable)
+                try write(Terminal.Mode.Mouse.Any.enable)
+                try write(Terminal.Mode.Mouse.SGR.enable)
             }
             if configuration.paste {
-                writeToStdout(Terminal.Mode.Paste.enable)
+                try write(Terminal.Mode.Paste.enable)
             }
             if configuration.kitty {
-                writeToStdout(Terminal.Mode.Keyboard.enable)
+                try write(Terminal.Mode.Keyboard.enable)
             }
         }
 
-        /// Write disable sequences to stdout based on configuration.
-        private func writeDisableSequences() {
+        /// Write disable sequences to the raw-mode stream based on configuration.
+        private func writeDisableSequences() throws(Console.Input.Error) {
             if configuration.kitty {
-                writeToStdout(Terminal.Mode.Keyboard.disable)
+                try write(Terminal.Mode.Keyboard.disable)
             }
             if configuration.paste {
-                writeToStdout(Terminal.Mode.Paste.disable)
+                try write(Terminal.Mode.Paste.disable)
             }
             if configuration.mouse {
-                writeToStdout(Terminal.Mode.Mouse.SGR.disable)
-                writeToStdout(Terminal.Mode.Mouse.Any.disable)
+                try write(Terminal.Mode.Mouse.SGR.disable)
+                try write(Terminal.Mode.Mouse.Any.disable)
             }
         }
 
-        /// Write a string to stdout using the POSIX write syscall.
-        private func writeToStdout(_ string: Swift.String) {
-            unsafe string.withCString { pointer in
-                var remaining = unsafe strlen(pointer)
-                var current = unsafe pointer
-                while remaining > 0 {
-                    let written = unsafe write(
-                        Terminal.Stream.stdout.rawValue,
-                        current,
-                        remaining
-                    )
-                    guard written > 0 else { return }
-                    remaining -= written
-                    unsafe (current = current.advanced(by: written))
-                }
+        /// Write a control sequence to the terminal device associated with
+        /// this reader's raw-mode stream.
+        ///
+        /// Goes through the `Terminal.Stream.Write` Kernel witness bound to
+        /// `self.stream` — the same stream raw mode was entered on — instead
+        /// of a raw `write(2)` call hard-coded to stdout. The witness retries
+        /// on EINTR and loops over partial writes internally. Unlike the
+        /// previous implementation, a failure here is no longer silently
+        /// swallowed: it surfaces as ``Console.Input.Error/write(_:)``.
+        private func write(_ string: Swift.String) throws(Console.Input.Error) {
+            do throws(Kernel.IO.Write.Error) {
+                try stream.write(string.utf8.map(Byte.init))
+            } catch {
+                throw .write(error)
             }
         }
     }

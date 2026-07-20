@@ -25,6 +25,10 @@ extension Console.Input {
         #if os(macOS) || os(iOS) || os(tvOS) || os(watchOS) || os(visionOS) || os(Linux)
             /// Reading from the terminal stream failed.
             case read(Kernel.IO.Read.Error)
+
+            /// Writing a mode enable/disable control sequence to the terminal
+            /// stream failed.
+            case write(Kernel.IO.Write.Error)
         #endif
     }
 }

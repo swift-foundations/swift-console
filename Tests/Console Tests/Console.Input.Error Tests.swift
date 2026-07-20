@@ -88,6 +88,16 @@ extension Console.Input.Error.Test.Unit {
                 Issue.record("Expected .read case")
             }
         }
+
+        @Test
+        func `Write case wraps Kernel.IO.Write.Error`() {
+            let error = Console.Input.Error.write(.handle(.invalid))
+            if case .write(let e) = error {
+                #expect(e == .handle(.invalid))
+            } else {
+                Issue.record("Expected .write case")
+            }
+        }
     #endif
 }
 
@@ -95,13 +105,14 @@ extension Console.Input.Error.Test.Unit {
 
 extension Console.Input.Error.Test.EdgeCase {
     @Test
-    func `All three cases are distinct`() {
+    func `All four cases are distinct`() {
         let terminal = Console.Input.Error.terminal(
             Terminal.Error(operation: .enterRaw, underlying: .unsupported)
         )
         let parser = Console.Input.Error.parser(.invalidUTF8)
         #if os(macOS) || os(iOS) || os(tvOS) || os(watchOS) || os(visionOS) || os(Linux)
             let read = Console.Input.Error.read(.handle(.invalid))
+            let write = Console.Input.Error.write(.handle(.invalid))
         #endif
 
         // Verify each matches only its own case
@@ -109,6 +120,7 @@ extension Console.Input.Error.Test.EdgeCase {
         if case .parser = parser {} else { Issue.record("parser mismatch") }
         #if os(macOS) || os(iOS) || os(tvOS) || os(watchOS) || os(visionOS) || os(Linux)
             if case .read = read {} else { Issue.record("read mismatch") }
+            if case .write = write {} else { Issue.record("write mismatch") }
         #endif
     }
 
