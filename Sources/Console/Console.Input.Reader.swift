@@ -53,8 +53,12 @@
                 try reader.writeEnableSequences()
             } catch {
                 // Best-effort: don't leave the terminal stuck in raw mode just
-                // because an enable sequence failed to write.
-                try? reader.token.restore()
+                // because an enable sequence failed to write. The restore error
+                // is deliberately discarded — the original `error` is the one
+                // that must propagate ([IMPL-108]).
+                do throws(Terminal.Error) {
+                    try reader.token.restore()
+                } catch {}
                 throw error
             }
 
