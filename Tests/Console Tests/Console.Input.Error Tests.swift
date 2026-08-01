@@ -17,7 +17,7 @@ extension Console.Input.Error {
     @Suite
     struct Test {
         @Suite struct Unit {}
-        @Suite struct EdgeCase {}
+        @Suite struct `Edge Case` {}
     }
 }
 
@@ -103,7 +103,7 @@ extension Console.Input.Error.Test.Unit {
 
 // MARK: - EdgeCase
 
-extension Console.Input.Error.Test.EdgeCase {
+extension Console.Input.Error.Test.`Edge Case` {
     @Test
     func `All four cases are distinct`() {
         let terminal = Console.Input.Error.terminal(

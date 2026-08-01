@@ -97,7 +97,7 @@
                 if !parseBuffer.isEmpty {
                     var input = Input.Buffer(parseBuffer)
 
-                    do {
+                    do throws(Terminal.Input.Parser.Error) {
                         let event = try Terminal.Input.Parser.parse(&input)
                         // Remove consumed bytes from the front.
                         let consumed = Int(bitPattern: input.consumed)

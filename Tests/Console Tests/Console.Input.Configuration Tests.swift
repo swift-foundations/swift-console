@@ -17,7 +17,7 @@ extension Console.Input.Configuration {
     @Suite
     struct Test {
         @Suite struct Unit {}
-        @Suite struct EdgeCase {}
+        @Suite struct `Edge Case` {}
     }
 }
 
@@ -59,7 +59,7 @@ extension Console.Input.Configuration.Test.Unit {
 
 // MARK: - EdgeCase
 
-extension Console.Input.Configuration.Test.EdgeCase {
+extension Console.Input.Configuration.Test.`Edge Case` {
     @Test
     func `Properties are independently mutable`() {
         var config = Console.Input.Configuration.default
