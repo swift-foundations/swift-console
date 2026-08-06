@@ -33,3 +33,19 @@ extension Console.Output {
         unsafe fflush(stdout)
     }
 }
+
+extension Console.Output {
+    /// Writes a diagnostic to standard error.
+    ///
+    /// The one cross-platform seam to the C `stderr` stream: Glibc
+    /// imports it as a shared mutable `var`, which Swift 6 refuses to
+    /// reference outside this file's `@preconcurrency` import; Darwin
+    /// and Windows CRT expose the same stream safely. The stream locks
+    /// around each operation per ISO C 7.21, and a failed write is
+    /// dropped — a diagnostic never takes the caller down.
+    public static func error(_ text: Swift.String) {
+        text.withCString { pointer in
+            _ = unsafe fputs(pointer, stderr)
+        }
+    }
+}
