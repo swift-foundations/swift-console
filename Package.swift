@@ -9,7 +9,7 @@ let package = Package(
         .iOS(.v26),
         .tvOS(.v26),
         .watchOS(.v26),
-        .visionOS(.v26)
+        .visionOS(.v26),
     ],
     products: [
         .library(
@@ -20,9 +20,18 @@ let package = Package(
     dependencies: [
         .package(url: "https://github.com/swift-foundations/swift-kernel.git", branch: "main"),
         .package(url: "https://github.com/swift-ecma/swift-ecma-48.git", branch: "main"),
-        .package(url: "https://github.com/swift-primitives/swift-terminal-input-primitives.git", branch: "main"),
-        .package(url: "https://github.com/swift-primitives/swift-standard-library-extensions.git", branch: "main"),
-        .package(url: "https://github.com/swift-primitives/swift-byte-primitives.git", branch: "main"),
+        .package(
+            url: "https://github.com/swift-primitives/swift-terminal-input-primitives.git",
+            branch: "main"
+        ),
+        .package(
+            url: "https://github.com/swift-primitives/swift-standard-library-extensions.git",
+            branch: "main"
+        ),
+        .package(
+            url: "https://github.com/swift-primitives/swift-byte-primitives.git",
+            branch: "main"
+        ),
     ],
     targets: [
         .target(
@@ -31,11 +40,25 @@ let package = Package(
                 // Kernel (L3-unifier) composes POSIX Kernel which re-exports Terminal Primitives
                 // with callAsFunction implementations. Per [PLAT-ARCH-008e], swift-console
                 // composes the L3-unifier, not the L3-policy directly.
-                .product(name: "Kernel", package: "swift-kernel", condition: .when(platforms: [.macOS, .iOS, .tvOS, .watchOS, .visionOS, .linux])),
-                .product(name: "Kernel Terminal", package: "swift-kernel", condition: .when(platforms: [.macOS, .iOS, .tvOS, .watchOS, .visionOS, .linux])),
+                .product(
+                    name: "Kernel",
+                    package: "swift-kernel",
+                    condition: .when(platforms: [.macOS, .iOS, .tvOS, .watchOS, .visionOS, .linux])
+                ),
+                .product(
+                    name: "Kernel Terminal",
+                    package: "swift-kernel",
+                    condition: .when(platforms: [.macOS, .iOS, .tvOS, .watchOS, .visionOS, .linux])
+                ),
                 .product(name: "ECMA 48", package: "swift-ecma-48"),
-                .product(name: "Terminal Input Primitives", package: "swift-terminal-input-primitives"),
-                .product(name: "Standard Library Extensions", package: "swift-standard-library-extensions"),
+                .product(
+                    name: "Terminal Input Primitives",
+                    package: "swift-terminal-input-primitives"
+                ),
+                .product(
+                    name: "Standard Library Extensions",
+                    package: "swift-standard-library-extensions"
+                ),
             ]
         ),
         .testTarget(

@@ -133,7 +133,7 @@
                 bytesRead = try unsafe withUnsafeTemporaryAllocation(
                     byteCount: 4096,
                     alignment: 1
-                ) { (rawBuffer: UnsafeMutableRawBufferPointer) throws(Kernel.IO.Read.Error) -> Int in
+                ) { rawBuffer throws(Kernel.IO.Read.Error) -> Int in
                     let n = try unsafe stream.read(into: rawBuffer)
                     if n > 0 {
                         let typed = unsafe UnsafeBufferPointer(
