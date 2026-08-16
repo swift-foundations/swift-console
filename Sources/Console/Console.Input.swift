@@ -44,7 +44,7 @@ extension Console {
         public static func withEvents(
             stream: Terminal.Stream = .stdin,
             configuration: Configuration = .default,
-            _ body: ( /* next: */() throws(Error) -> Terminal.Input.Event?) throws(Error) -> Void
+            _ body: (() throws(Error) -> Terminal.Input.Event?) throws(Error) -> Void
         ) throws(Error) {
             var reader = try Reader.start(stream: stream, configuration: configuration)
 
