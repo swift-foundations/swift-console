@@ -37,9 +37,7 @@ let package = Package(
         .target(
             name: "Console",
             dependencies: [
-                // Kernel (L3-unifier) composes POSIX Kernel which re-exports Terminal Primitives
-                // with callAsFunction implementations. Per [PLAT-ARCH-008e], swift-console
-                // composes the L3-unifier, not the L3-policy directly.
+
                 .product(
                     name: "Kernel",
                     package: "swift-kernel",

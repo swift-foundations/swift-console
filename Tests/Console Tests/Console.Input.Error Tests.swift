@@ -1,14 +1,3 @@
-// ===----------------------------------------------------------------------===//
-//
-// This source file is part of the swift-console open source project
-//
-// Copyright (c) 2024 Coen ten Thije Boonkkamp and the swift-console project authors
-// Licensed under Apache License v2.0
-//
-// See LICENSE for license information
-//
-// ===----------------------------------------------------------------------===//
-
 import Testing
 
 @testable import Console
@@ -20,8 +9,6 @@ extension Console.Input.Error {
         @Suite struct `Edge Case` {}
     }
 }
-
-// MARK: - Unit
 
 extension Console.Input.Error.Test.Unit {
     @Test
@@ -101,8 +88,6 @@ extension Console.Input.Error.Test.Unit {
     #endif
 }
 
-// MARK: - EdgeCase
-
 extension Console.Input.Error.Test.`Edge Case` {
     @Test
     func `All four cases are distinct`() {
@@ -115,7 +100,6 @@ extension Console.Input.Error.Test.`Edge Case` {
             let write = Console.Input.Error.write(.handle(.invalid))
         #endif
 
-        // Verify each matches only its own case
         if case .terminal = terminal {} else { Issue.record("terminal mismatch") }
         if case .parser = parser {} else { Issue.record("parser mismatch") }
         #if os(macOS) || os(iOS) || os(tvOS) || os(watchOS) || os(visionOS) || os(Linux)

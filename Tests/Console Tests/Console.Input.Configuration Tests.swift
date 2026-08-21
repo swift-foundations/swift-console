@@ -1,14 +1,3 @@
-// ===----------------------------------------------------------------------===//
-//
-// This source file is part of the swift-console open source project
-//
-// Copyright (c) 2024 Coen ten Thije Boonkkamp and the swift-console project authors
-// Licensed under Apache License v2.0
-//
-// See LICENSE for license information
-//
-// ===----------------------------------------------------------------------===//
-
 import Testing
 
 @testable import Console
@@ -20,8 +9,6 @@ extension Console.Input.Configuration {
         @Suite struct `Edge Case` {}
     }
 }
-
-// MARK: - Unit
 
 extension Console.Input.Configuration.Test.Unit {
     @Test
@@ -56,8 +43,6 @@ extension Console.Input.Configuration.Test.Unit {
         #expect(config.kitty == false)
     }
 }
-
-// MARK: - EdgeCase
 
 extension Console.Input.Configuration.Test.`Edge Case` {
     @Test
